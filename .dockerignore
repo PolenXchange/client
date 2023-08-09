@@ -1,0 +1,14 @@
+# Files and directories to exclude from the Docker image build for the frontend
+
+# Exclude node_modules directory
+node_modules/
+
+# Exclude any log files
+*.log
+
+# Exclude any temporary or build files
+tmp/
+build/
+
+# Exclude any environment-specific files
+.env*
