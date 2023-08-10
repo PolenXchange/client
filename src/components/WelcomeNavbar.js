@@ -1,4 +1,4 @@
-import HiveLogo from "../assets/hive-logo.png";
+import HiveLogo from "../assets/polenx.png";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
