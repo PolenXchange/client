@@ -66,6 +66,12 @@ export default function WelcomeNavBar() {
                 >
                   Exchange
                 </Link>
+                <Link
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  to="/swap"
+                >
+                  Swap
+                </Link>
               </div>
             </div>
             {/* User-related elements (Login, Username) on smaller screens */}

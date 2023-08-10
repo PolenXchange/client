@@ -5,6 +5,7 @@ import WelcomeNavBar from "./components/WelcomeNavbar.js";
 import styles from "./index.css";
 import LandingPage from "./pages/LandingPage.js";
 import ExchangePage from "./pages/ExchangePage.js";
+import SwapPage from "./pages/SwapPage.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<WelcomeNavBar />}>
           <Route index element={<LandingPage />} />
           <Route path="exchange" element={<ExchangePage />} />
+          <Route path="swap" element={<SwapPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
