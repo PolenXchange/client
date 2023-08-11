@@ -1,7 +1,7 @@
 import HiveLogo from "../assets/polenx.png";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +20,7 @@ export default function WelcomeNavBar() {
   const isModalOpen = useSelector((state) => state.modalLogin.isLoginModalOpen);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const username = useSelector((state) => state.auth.username);
+  const navigate = useNavigate();
   const toggleModal = () => {
     if (isLoggedIn || isModalOpen) {
       dispatch(closeLoginModal()); // Close the modal
@@ -27,7 +28,11 @@ export default function WelcomeNavBar() {
       dispatch(openLoginModal()); // Open the modal
     }
   };
-
+  const handleLinkClick = (path) => {
+    setIsMobileMenuOpen(false);
+    console.log(`navigating to ${path}`);
+    navigate(path);
+  };
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -116,24 +121,24 @@ export default function WelcomeNavBar() {
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="ml-4 flex flex-col items-center">
-              <Link
-                className="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium mb-2"
-                to="/"
+              <span
+                onClick={() => handleLinkClick("/")}
+                className="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium mb-2 cursor-pointer"
               >
                 Home
-              </Link>
-              <Link
-                className="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium"
-                to="/exchange"
+              </span>
+              <span
+                onClick={() => handleLinkClick("/exchange")}
+                className="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium cursor-pointer"
               >
                 Exchange
-              </Link>
-              <Link
-                className="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium"
-                to="/swap"
+              </span>
+              <span
+                onClick={() => handleLinkClick("/swap")}
+                className="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium cursor-pointer"
               >
                 Swap
-              </Link>
+              </span>
             </div>
           </div>
         )}
