@@ -128,6 +128,12 @@ export default function WelcomeNavBar() {
               >
                 Exchange
               </Link>
+              <Link
+                className="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium"
+                to="/swap"
+              >
+                Swap
+              </Link>
             </div>
           </div>
         )}
