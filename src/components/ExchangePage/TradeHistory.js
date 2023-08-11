@@ -137,21 +137,25 @@ const TradeHistory = () => {
           <table className="w-full">
             <thead>
               <tr>
-                <th className="px-4 py-2">Type</th>
-                <th className="px-4 py-2">Price (HBD)</th>
-                <th className="px-4 py-2">HIVE</th>
-                <th className="px-4 py-2">HBD</th>
-                <th className="px-4 py-2">Time</th>
+                <th className="px-2 py-1 text-center">Type</th>
+                <th className="px-2 py-1 text-center">Price (HBD)</th>
+                <th className="px-2 py-1 text-center">HIVE</th>
+                <th className="px-2 py-1 text-center">HBD</th>
+                <th className="px-2 py-1 text-center">Time</th>
               </tr>
             </thead>
             <tbody>
               {currentPageTradeHistory.map((trade) => (
                 <tr key={trade._id}>
-                  <td className="px-4 py-2">{trade.operation}</td>
-                  <td className="px-4 py-2">{trade.hivePrice} HBD</td>
-                  <td className="px-4 py-2">{trade.open_pays}</td>
-                  <td className="px-4 py-2">{trade.current_pays}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-2 py-1 text-center">{trade.operation}</td>
+                  <td className="px-2 py-1 text-center">
+                    {parseFloat(trade.hivePrice).toFixed(3)} HBD
+                  </td>
+                  <td className="px-2 py-1 text-center">{trade.open_pays}</td>
+                  <td className="px-2 py-1 text-center">
+                    {trade.current_pays}
+                  </td>
+                  <td className="px-2 py-1 text-center">
                     {getTimeElapsed(trade.parsed_date)}
                   </td>
                 </tr>
