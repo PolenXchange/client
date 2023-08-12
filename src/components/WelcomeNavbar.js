@@ -18,7 +18,7 @@ export default function WelcomeNavBar() {
   const username = useSelector((state) => state.auth.username);
   const navigate = useNavigate();
   const toggleModal = () => {
-    if (isLoggedIn || isModalOpen) {
+    if (isLoggedIn === "true" || isModalOpen) {
       dispatch(closeLoginModal()); // Close the modal
     } else {
       dispatch(openLoginModal()); // Open the modal
@@ -77,7 +77,7 @@ export default function WelcomeNavBar() {
             </div>
             {/* User-related elements (Login, Username) on smaller screens */}
             <div className="flex items-center space-x-4 ml-auto md:ml-0">
-              {isLoggedIn ? (
+              {isLoggedIn === "true" ? (
                 // Logout button
                 <>
                   <span className="text-sm font-medium text-white">
