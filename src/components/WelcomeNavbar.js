@@ -5,12 +5,8 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import {
-  logout,
-  resetAccount,
-  openLoginModal,
-  closeLoginModal,
-} from "../redux/store";
+import { resetAccount, openLoginModal, closeLoginModal } from "../redux/store";
+import { logout } from "../redux/auth/authSlice";
 import { useDispatch } from "react-redux";
 export default function WelcomeNavBar() {
   const dispatch = useDispatch();

@@ -3,60 +3,9 @@ import {
   createSlice,
   createAsyncThunk,
 } from "@reduxjs/toolkit";
+import authReducer, { setLoggedIn, logout } from "./auth/authSlice";
+import { login } from "./auth/authThunk";
 import axios from "axios";
-
-// Define initial state
-const initialState = {
-  isLoggedIn: false,
-  username: "",
-};
-
-// Define an async thunk for the login action
-export const login = createAsyncThunk(
-  "auth/login",
-  async (payload, { dispatch }) => {
-    const result = await authenticate(payload.username);
-
-    if (result.data.username) {
-      dispatch(authSlice.actions.setLoggedIn(result.data.username));
-      payload.onClose(); // Call onClose after successful login
-    }
-  }
-);
-
-const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    setLoggedIn: (state, action) => {
-      state.isLoggedIn = true;
-      state.username = action.payload;
-    },
-    logout: (state) => {
-      state.isLoggedIn = false;
-      state.username = "";
-    },
-  },
-});
-
-const authenticate = async (user) =>
-  new Promise((resolve, reject) => {
-    if (!window.hive_keychain) {
-      return reject("Keychain not found");
-    }
-
-    window.hive_keychain.requestSignBuffer(
-      user,
-      `${user}${Date.now()}`,
-      "Active",
-      async function (result) {
-        if (result.error) {
-          return reject(result.error);
-        }
-        return resolve(result);
-      }
-    );
-  });
 
 // Async thunk to fetch trade history
 export const fetchTradeHistory = createAsyncThunk(
@@ -197,7 +146,7 @@ const modalLoginSlice = createSlice({
 // Create store
 const store = configureStore({
   reducer: {
-    auth: authSlice.reducer,
+    auth: authReducer,
     tradeHistory: tradeHistorySlice.reducer,
     orderBook: orderBookSlice.reducer,
     openOrders: openOrdersSlice.reducer,
@@ -208,7 +157,6 @@ const store = configureStore({
 });
 
 // Export actions
-export const { setLoggedIn, logout } = authSlice.actions;
 export const { resetAccount } = accountSlice.actions;
 export const { openLoginModal, closeLoginModal } = modalLoginSlice.actions;
 

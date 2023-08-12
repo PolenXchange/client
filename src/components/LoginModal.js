@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../redux/store";
+import { login } from "../redux/auth/authThunk";
 const LoginModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
