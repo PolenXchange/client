@@ -37,7 +37,12 @@ export const parseFiveMinuteChart = (data, previousPrice, roundLimit) => {
       let close = filteredObjects.at(-1).hivePrice;
       parsed.push({
         x: new Date(firstDate),
-        y: [open, high, low, close], //open, high, low, close
+        y: [
+          parseFloat(open).toFixed(3),
+          parseFloat(high).toFixed(3),
+          parseFloat(low).toFixed(3),
+          parseFloat(close).toFixed(3),
+        ], //open, high, low, close
       });
     }
 

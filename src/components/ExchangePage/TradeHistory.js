@@ -163,8 +163,7 @@ const TradeHistory = () => {
             </tbody>
           </table>
 
-          {/* Dynamic Pagination */}
-          <div className="mt-4">
+          <div className="mt-4 flex justify-center">
             {currentPage !== 1 && (
               <button
                 className="mr-2 px-3 py-1 rounded bg-gray-300"

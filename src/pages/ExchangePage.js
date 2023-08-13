@@ -4,19 +4,17 @@ import PriceChart from "../components/ExchangePage/ExchangeChart";
 import OrderInput from "../components/ExchangePage/OrderInput";
 import OrderBook from "../components/ExchangePage/OrderBook";
 import MyOrders from "../components/ExchangePage/MyOrders";
-import TradeHistory from "../components/ExchangePage/TradeHistory"; // Import the TradeHistory component
+import TradeHistory from "../components/ExchangePage/TradeHistory";
 import axios from "axios";
 import { parseFiveMinuteChart } from "../helpers/ChartHelper";
-import { fetchTradeHistory, fetchMyOpenOrders } from "../redux/store"; // Update the path to your store file if needed
+import { fetchTradeHistory, fetchMyOpenOrders } from "../redux/store";
 
 const ExchangePage = () => {
-  // Fetch trade history state from Redux store
   const dispatch = useDispatch();
   const username = useSelector((state) => state.auth.username);
   const account = useSelector((state) => state.account);
 
   useEffect(() => {
-    // Fetch trade history data through Redux
     dispatch(fetchTradeHistory());
   }, [dispatch]);
 
@@ -25,6 +23,7 @@ const ExchangePage = () => {
       dispatch(fetchMyOpenOrders(username));
     }
   }, [username, dispatch]);
+
   const candlestickData = [
     // { date: "2023-05-01", open: 100, high: 120, low: 80, close: 110 },
     // { date: "2023-05-02", open: 110, high: 130, low: 100, close: 120 },
@@ -32,27 +31,26 @@ const ExchangePage = () => {
   ];
 
   return (
-    <div>
-      {/* Responsive layout using Flexbox */}
-      <div className="flex flex-col md:flex-row">
-        <div className="w-full md:w-2/3">
+    <div className="max-w-screen-xl mx-auto px-4">
+      <div className="flex flex-col md:flex-row gap-4  p-2 ">
+        <div className="w-full md:w-2/3  p-2 shadow-md">
           <PriceChart width={800} ratio={1} />
-        </div>
-        <div className="w-full md:w-1/3 md:pl-4">
-          {/* Side Panels Section (OrderInput, OrderBook, MyOrders) */}
-          <div className="md:flex md:flex-col md:ml-4 md:order-first">
-            {/* Order Input Section */}
-            <OrderInput style={{ marginBottom: "20px" }} />
-
-            {/* Order Book Section */}
-            <OrderBook style={{ marginBottom: "20px" }} />
+          {/* Place OrderInput component below the chart on desktop */}
+          <div className="md:block  p-2 mt-4">
+            <OrderInput />
           </div>
+        </div>
+        <div className="w-full md:w-1/3 md:flex md:flex-col md:space-y-4  p-2">
+          <OrderBook />
         </div>
       </div>
 
-      {/* Trade History Section */}
-      <div className="mt-4">
-        {/* My Orders Section */}
+      <div className="md:hidden  p-2 mt-4">
+        {/* Display OrderInput below the chart on mobile */}
+        <OrderInput />
+      </div>
+
+      <div className="mt-4 space-y-4  p-2">
         {username && account && <MyOrders />}
         <TradeHistory />
       </div>

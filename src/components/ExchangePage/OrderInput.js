@@ -131,59 +131,61 @@ const OrderInput = () => {
   };
 
   return (
-    <form onSubmit={handleBuyOrderSubmit}>
-      <div className="mb-2">
-        <label className="font-bold" htmlFor="amountInput">
+    <form onSubmit={handleBuyOrderSubmit} className="p-2">
+      <div className="mb-1">
+        <label className="font-bold text-sm" htmlFor="amountInput">
           Amount:
         </label>
         <input
           id="amountInput"
-          className="border border-gray-300 rounded p-2 w-full"
+          className="border border-gray-300 rounded p-1 w-full text-sm"
           type="number"
           value={amount}
           onChange={handleAmountChange}
         />
       </div>
-      <div className="mb-2">
-        <label className="font-bold" htmlFor="priceInput">
+      <div className="mb-1">
+        <label className="font-bold text-sm" htmlFor="priceInput">
           Price:
         </label>
         <input
           id="priceInput"
-          className="border border-gray-300 rounded p-2 w-full"
+          className="border border-gray-300 rounded p-1 w-full text-sm"
           type="number"
           value={price}
           onChange={handlePriceChange}
         />
       </div>
-      <div className="mb-2">
-        <label className="font-bold" htmlFor="totalInput">
+      <div className="mb-1">
+        <label className="font-bold text-sm" htmlFor="totalInput">
           Total:
         </label>
         <input
           id="totalInput"
-          className="border border-gray-300 rounded p-2 w-full"
+          className="border border-gray-300 rounded p-1 w-full text-sm"
           type="number"
           value={total}
           readOnly
         />
       </div>
       {account && username && (
-        <div className="mb-2">
-          <p className="font-bold">Account Balances:</p>
-          <p>HIVE Balance: {account.balance}</p>
-          <p>HBD Balance: {account.hbd_balance}</p>
+        <div className="mb-1">
+          <p className="font-bold text-sm">Account Balances:</p>
+          <p className="text-sm">HIVE Balance: {account.balance}</p>
+          <p className="text-sm">HBD Balance: {account.hbd_balance}</p>
         </div>
       )}
-      <div className="flex">
+      <div className="flex justify-between">
         <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded  flex-grow"
           type="submit"
         >
           Buy
         </button>
+
+        <div className="flex-grow"></div>
         <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex-grow"
           type="button"
           onClick={handleSellOrderSubmit}
         >

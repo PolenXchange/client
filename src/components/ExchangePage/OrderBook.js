@@ -24,7 +24,7 @@ const OrderBook = () => {
       <div className="grid grid-cols-4 gap-4 text-center">
         <div
           className="col-span-2"
-          style={{ maxHeight: "400px", overflowY: "auto" }}
+          style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
           {orderBookData.bids.length > 0 ? (
             orderBookData.bids.map((order, index) => (
@@ -39,7 +39,7 @@ const OrderBook = () => {
         </div>
         <div
           className="col-span-2"
-          style={{ maxHeight: "400px", overflowY: "auto" }}
+          style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
           {orderBookData.asks.length > 0 ? (
             orderBookData.asks.map((order, index) => (
