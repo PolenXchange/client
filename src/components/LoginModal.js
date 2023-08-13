@@ -13,7 +13,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Perform login logic here
-    await dispatch(login({ username: e.target.value, onClose }));
+    await dispatch(login({ username: username, onClose }));
     // onClose(); // Close the modal after login
   };
 
