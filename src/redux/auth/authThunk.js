@@ -24,7 +24,6 @@ export const login = createAsyncThunk(
   "auth/login",
   async (payload, { dispatch }) => {
     const result = await authenticate(payload.username);
-
     if (result.data.username) {
       dispatch(setLoggedIn(result.data.username));
       payload.onClose(); // Call onClose after successful login
