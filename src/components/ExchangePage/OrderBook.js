@@ -26,10 +26,14 @@ const OrderBook = () => {
           className="col-span-2"
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
+          <div className="flex justify-between font-bold">
+            <div>HIVE</div>
+            <div>Price</div>
+          </div>
           {orderBookData.bids.length > 0 ? (
             orderBookData.bids.map((order, index) => (
               <div key={index} className="flex justify-between">
-                <div>{order.order_price.quote}</div>
+                <div>{order.order_price.quote.replace(" HIVE", "")}</div>
                 <div>{parseFloat(order.real_price).toFixed(3)}</div>
               </div>
             ))
@@ -41,10 +45,14 @@ const OrderBook = () => {
           className="col-span-2"
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
+          <div className="flex justify-between font-bold">
+            <div>HIVE</div>
+            <div>Price</div>
+          </div>
           {orderBookData.asks.length > 0 ? (
             orderBookData.asks.map((order, index) => (
               <div key={index} className="flex justify-between">
-                <div>{order.order_price.base}</div>
+                <div>{order.order_price.base.replace(" HIVE", "")}</div>
                 <div>{parseFloat(order.real_price).toFixed(3)}</div>
               </div>
             ))
