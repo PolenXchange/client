@@ -84,12 +84,7 @@ const ExchangeChart = () => {
         {chartData.length > 0 &&
         chartData[0] &&
         chartData[0].data.length > 0 ? (
-          <ReactApexChart
-            options={options}
-            series={chartData}
-            type="candlestick"
-            height={chartHeight}
-          />
+          reactApexChart
         ) : (
           <p>No chart data available.</p>
         )}
