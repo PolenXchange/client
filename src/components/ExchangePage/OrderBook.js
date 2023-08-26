@@ -1,13 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrderBook } from "../../redux/store"; // Import the fetchOrderBook async thunk
 
 const OrderBook = () => {
   const dispatch = useDispatch();
 
+  const intervalId = useRef(null);
+
   useEffect(() => {
-    // Fetch order book data through Redux
+    // Fetch order book data through Redux immediately when the component mounts
     dispatch(fetchOrderBook());
+
+    // Set up an interval to fetch order book data every 1 minute
+    intervalId.current = setInterval(() => {
+      dispatch(fetchOrderBook());
+    }, 60000); // 60000 milliseconds = 1 minute
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId.current);
+    };
   }, [dispatch]);
 
   // Fetch order book state from Redux store
