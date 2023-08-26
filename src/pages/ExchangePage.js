@@ -14,7 +14,7 @@ const ExchangePage = () => {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.auth.username);
   const account = useSelector((state) => state.account);
-  let socket = useRef(socketIOClient("/socket"));
+  let socket = useRef(socketIOClient());
 
   useEffect(() => {
     dispatch(fetchTradeHistory());
@@ -27,7 +27,7 @@ const ExchangePage = () => {
   }, [username, dispatch]);
 
   useEffect(() => {
-    socket.current = socketIOClient("/socket"); // Create or reassign the socket connection
+    socket.current = socketIOClient(); // Create or reassign the socket connection
     socket.current.on("newData", (data) => {
       console.log("New data arrived form socket");
       console.log(data);
