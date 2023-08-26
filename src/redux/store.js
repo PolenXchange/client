@@ -124,6 +124,14 @@ const tradeHistorySlice = createSlice({
       })
       .addCase(fetchTradeHistory.rejected, (state, action) => {
         // Handle error if needed
+      })
+      .addCase("newDataReceived", (state, action) => {
+        console.log("adding new data to state");
+        console.log(action.payload);
+        let newState = [...action.payload, ...state];
+        console.log("new state");
+        console.log(newState);
+        return newState; // Append new data to existing state
       });
   },
 });

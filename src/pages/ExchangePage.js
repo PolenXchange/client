@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import socketIOClient from "socket.io-client";
 import PriceChart from "../components/ExchangePage/ExchangeChart";
 import OrderInput from "../components/ExchangePage/OrderInput";
 import OrderBook from "../components/ExchangePage/OrderBook";
@@ -13,6 +14,7 @@ const ExchangePage = () => {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.auth.username);
   const account = useSelector((state) => state.account);
+  let socket = useRef(socketIOClient());
 
   useEffect(() => {
     dispatch(fetchTradeHistory());
@@ -24,18 +26,24 @@ const ExchangePage = () => {
     }
   }, [username, dispatch]);
 
-  const candlestickData = [
-    // { date: "2023-05-01", open: 100, high: 120, low: 80, close: 110 },
-    // { date: "2023-05-02", open: 110, high: 130, low: 100, close: 120 },
-    // Add more data points as needed
-  ];
+  useEffect(() => {
+    socket.current = socketIOClient(); // Create or reassign the socket connection
+    socket.current.on("newData", (data) => {
+      console.log("New data arrived form socket");
+      console.log(data);
+      dispatch({ type: "newDataReceived", payload: data });
+    });
+    return () => {
+      console.log("disconnecting from socket");
+      socket.current.disconnect();
+    };
+  }, []);
 
   return (
     <div className="max-w-screen-xl mx-auto px-4">
       <div className="flex flex-col md:flex-row gap-4  p-2 ">
         <div className="w-full md:w-2/3  p-2 shadow-md">
           <PriceChart width={800} ratio={1} />
-          {/* Place OrderInput component below the chart on desktop */}
           <div className="md:block  p-2 mt-4">
             <OrderInput />
           </div>
@@ -46,7 +54,6 @@ const ExchangePage = () => {
       </div>
 
       <div className="md:hidden  p-2 mt-4">
-        {/* Display OrderInput below the chart on mobile */}
         <OrderInput />
       </div>
 
