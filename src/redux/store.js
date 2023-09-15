@@ -12,7 +12,7 @@ export const fetchTradeHistory = createAsyncThunk(
   "tradeHistory/fetchTradeHistory",
   async () => {
     try {
-      const result = await axios.get("/api/tradehistory");
+      const result = await axios.get(`/api/tradehistory?now=${Date.now()}`);
       return result.data;
     } catch (error) {
       throw new Error("Failed to fetch trade history.");
@@ -25,7 +25,7 @@ export const fetchOrderBook = createAsyncThunk(
   "orderBook/fetchOrderBook",
   async () => {
     try {
-      const result = await axios.get("/api/orderbook");
+      const result = await axios.get(`/api/orderbook?now=${Date.now()}`);
       return result.data;
     } catch (error) {
       throw new Error("Failed to fetch order book data.");
@@ -38,7 +38,7 @@ export const fetchMyOpenOrders = createAsyncThunk(
   "tradeHistory/fetchMyOpenOrders",
   async (username) => {
     try {
-      const result = await axios.get(`/api/openorders?account=${username}`);
+      const result = await axios.get(`/api/openorders?account=${username}&now=${Date.now()}`);
       return result.data;
     } catch (error) {
       throw new Error("Failed to fetch trade history.");
@@ -50,7 +50,7 @@ export const fetchAccount = createAsyncThunk(
   "tradeHistory/getaccount",
   async (username) => {
     try {
-      const result = await axios.get(`/api/getaccount?account=${username}`);
+      const result = await axios.get(`/api/getaccount?account=${username}&now=${Date.now()}`);
       return result.data[0];
     } catch (error) {
       throw new Error("Failed to fetch trade history.");
