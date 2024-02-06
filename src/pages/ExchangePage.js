@@ -15,6 +15,7 @@ const ExchangePage = () => {
   const username = useSelector((state) => state.auth.username);
   const account = useSelector((state) => state.account);
   let socket = useRef(socketIOClient());
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   useEffect(() => {
     dispatch(fetchTradeHistory());
@@ -40,7 +41,11 @@ const ExchangePage = () => {
   }, []);
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4">
+    <div
+      className={`max-w-screen-xl mx-auto px-4 ${
+        currentTheme === "dark" ? "bg-gray-800" : "bg-white"
+      }`}
+    >
       <div className="flex flex-col md:flex-row gap-4  p-2 ">
         <div className="w-full md:w-2/3  p-2 shadow-md">
           <PriceChart width={800} ratio={1} />

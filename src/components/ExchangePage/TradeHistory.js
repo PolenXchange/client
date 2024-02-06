@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 const TradeHistory = () => {
   // Fetch trade history state from Redux store
   const tradeHistory = useSelector((state) => state.tradeHistory);
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   // Pagination state and items per page
   const [currentPage, setCurrentPage] = useState(1);
@@ -80,7 +81,16 @@ const TradeHistory = () => {
 
       // Show ellipsis before the current page if applicable
       if (currentPage - Math.floor(maxVisiblePages / 2) > 2) {
-        pageButtons.push(<span key="ellipsis-start">...</span>);
+        pageButtons.push(
+          <span
+            key="ellipsis-start"
+            className={`${
+              currentTheme === "dark" ? "text-gray-300" : "text-black"
+            }`}
+          >
+            ...
+          </span>
+        );
       }
 
       // Calculate start and end page numbers for visible buttons
@@ -107,7 +117,16 @@ const TradeHistory = () => {
 
       // Show ellipsis after the current page if applicable
       if (currentPage + Math.floor(maxVisiblePages / 2) < totalPages - 1) {
-        pageButtons.push(<span key="ellipsis-end">...</span>);
+        pageButtons.push(
+          <span
+            key="ellipsis-end"
+            className={`${
+              currentTheme === "dark" ? "text-gray-300" : "text-black"
+            }`}
+          >
+            ...
+          </span>
+        );
       }
 
       // Show last page button
@@ -130,32 +149,96 @@ const TradeHistory = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
-      <h2 className="text-lg font-bold mb-4">Trade History</h2>
+    <div
+      className={`${
+        currentTheme === "dark" ? "bg-gray-800" : "bg-white"
+      } p-4 rounded-lg shadow-md`}
+    >
+      <h2
+        className={`text-lg font-bold mb-4 ${
+          currentTheme === "dark" ? "text-gray-300" : "text-black"
+        }`}
+      >
+        Trade History
+      </h2>
       {currentPageTradeHistory.length > 0 ? (
         <>
           <table className="w-full">
             <thead>
               <tr>
-                <th className="px-2 py-1 text-center">Type</th>
-                <th className="px-2 py-1 text-center">Price (HBD)</th>
-                <th className="px-2 py-1 text-center">HIVE</th>
-                <th className="px-2 py-1 text-center">HBD</th>
-                <th className="px-2 py-1 text-center">Time</th>
+                <th
+                  className={`px-2 py-1 text-center ${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  Type
+                </th>
+                <th
+                  className={`px-2 py-1 text-center ${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  Price (HBD)
+                </th>
+                <th
+                  className={`px-2 py-1 text-center ${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  HIVE
+                </th>
+                <th
+                  className={`px-2 py-1 text-center ${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  HBD
+                </th>
+                <th
+                  className={`px-2 py-1 text-center ${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  Time
+                </th>
               </tr>
             </thead>
             <tbody>
               {currentPageTradeHistory.map((trade) => (
                 <tr key={trade._id}>
-                  <td className="px-2 py-1 text-center">{trade.operation}</td>
-                  <td className="px-2 py-1 text-center">
+                  <td
+                    className={`px-2 py-1 text-center ${
+                      currentTheme === "dark" ? "text-gray-300" : "text-black"
+                    }`}
+                  >
+                    {trade.operation}
+                  </td>
+                  <td
+                    className={`px-2 py-1 text-center ${
+                      currentTheme === "dark" ? "text-gray-300" : "text-black"
+                    }`}
+                  >
                     {parseFloat(trade.hivePrice).toFixed(3)} HBD
                   </td>
-                  <td className="px-2 py-1 text-center">{trade.open_pays}</td>
-                  <td className="px-2 py-1 text-center">
+                  <td
+                    className={`px-2 py-1 text-center ${
+                      currentTheme === "dark" ? "text-gray-300" : "text-black"
+                    }`}
+                  >
+                    {trade.open_pays}
+                  </td>
+                  <td
+                    className={`px-2 py-1 text-center ${
+                      currentTheme === "dark" ? "text-gray-300" : "text-black"
+                    }`}
+                  >
                     {trade.current_pays}
                   </td>
-                  <td className="px-2 py-1 text-center">
+                  <td
+                    className={`px-2 py-1 text-center ${
+                      currentTheme === "dark" ? "text-gray-300" : "text-black"
+                    }`}
+                  >
                     {getTimeElapsed(trade.parsed_date)}
                   </td>
                 </tr>
@@ -184,7 +267,13 @@ const TradeHistory = () => {
           </div>
         </>
       ) : (
-        <p>No trade history</p>
+        <p
+          className={`${
+            currentTheme === "dark" ? "text-gray-300" : "text-black"
+          }`}
+        >
+          No trade history
+        </p>
       )}
     </div>
   );

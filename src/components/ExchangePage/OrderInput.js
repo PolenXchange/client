@@ -12,6 +12,7 @@ const OrderInput = () => {
   const [total, setTotal] = useState("");
   const username = useSelector((state) => state.auth.username);
   const account = useSelector((state) => state.account);
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const dispatch = useDispatch();
 
@@ -133,36 +134,57 @@ const OrderInput = () => {
   return (
     <form onSubmit={handleBuyOrderSubmit} className="p-2">
       <div className="mb-1">
-        <label className="font-bold text-sm" htmlFor="amountInput">
+        <label
+          className={`font-bold text-sm ${
+            currentTheme === "dark" ? "text-gray-300" : "text-black"
+          }`}
+          htmlFor="amountInput"
+        >
           Amount:
         </label>
         <input
           id="amountInput"
-          className="border border-gray-300 rounded p-1 w-full text-sm"
+          className={`border border-gray-300 rounded p-1 w-full text-sm ${
+            currentTheme === "dark" ? "bg-gray-500" : "text-black"
+          }`}
           type="number"
           value={amount}
           onChange={handleAmountChange}
         />
       </div>
       <div className="mb-1">
-        <label className="font-bold text-sm" htmlFor="priceInput">
+        <label
+          className={`font-bold text-sm ${
+            currentTheme === "dark" ? "text-gray-300" : "text-black"
+          }`}
+          htmlFor="priceInput"
+        >
           Price:
         </label>
         <input
           id="priceInput"
-          className="border border-gray-300 rounded p-1 w-full text-sm"
+          className={`border border-gray-300 rounded p-1 w-full text-sm ${
+            currentTheme === "dark" ? "bg-gray-500" : "text-black"
+          }`}
           type="number"
           value={price}
           onChange={handlePriceChange}
         />
       </div>
       <div className="mb-1">
-        <label className="font-bold text-sm" htmlFor="totalInput">
+        <label
+          className={`font-bold text-sm ${
+            currentTheme === "dark" ? "text-gray-300" : "text-black"
+          }`}
+          htmlFor="totalInput"
+        >
           Total:
         </label>
         <input
           id="totalInput"
-          className="border border-gray-300 rounded p-1 w-full text-sm"
+          className={`border border-gray-300 rounded p-1 w-full text-sm ${
+            currentTheme === "dark" ? "bg-gray-500" : "text-black"
+          }`}
           type="number"
           value={total}
           readOnly
@@ -170,9 +192,27 @@ const OrderInput = () => {
       </div>
       {account && username && (
         <div className="mb-1">
-          <p className="font-bold text-sm">Account Balances:</p>
-          <p className="text-sm">HIVE Balance: {account.balance}</p>
-          <p className="text-sm">HBD Balance: {account.hbd_balance}</p>
+          <p
+            className={`font-bold text-sm ${
+              currentTheme === "dark" ? "text-gray-300" : "text-black"
+            }`}
+          >
+            Account Balances:
+          </p>
+          <p
+            className={`text-sm ${
+              currentTheme === "dark" ? "text-gray-300" : "text-black"
+            }`}
+          >
+            HIVE Balance: {account.balance}
+          </p>
+          <p
+            className={`text-sm ${
+              currentTheme === "dark" ? "text-gray-300" : "text-black"
+            }`}
+          >
+            HBD Balance: {account.hbd_balance}
+          </p>
         </div>
       )}
       <div className="flex justify-between">

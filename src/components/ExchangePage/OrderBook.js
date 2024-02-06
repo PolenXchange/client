@@ -4,6 +4,7 @@ import { fetchOrderBook } from "../../redux/store"; // Import the fetchOrderBook
 
 const OrderBook = () => {
   const dispatch = useDispatch();
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const intervalId = useRef(null);
 
@@ -26,12 +27,28 @@ const OrderBook = () => {
   const orderBookData = useSelector((state) => state.orderBook);
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
+    <div
+      className={`${
+        currentTheme === "dark" ? "bg-gray-800" : "bg-white"
+      } p-4 rounded-lg shadow-md`}
+    >
       <div className="grid grid-cols-4 gap-4 text-center font-bold mb-2">
-        <div>BUY</div>
+        <div
+          className={`${
+            currentTheme === "dark" ? "text-gray-400" : "text-black"
+          }`}
+        >
+          BUY
+        </div>
         <div></div>
         <div></div>
-        <div>SELL</div>
+        <div
+          className={`${
+            currentTheme === "dark" ? "text-gray-400" : "text-black"
+          }`}
+        >
+          SELL
+        </div>
       </div>
       <div className="grid grid-cols-4 gap-4 text-center">
         <div
@@ -39,14 +56,38 @@ const OrderBook = () => {
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
           <div className="flex justify-between font-bold">
-            <div>HIVE</div>
-            <div>Price</div>
+            <div
+              className={`${
+                currentTheme === "dark" ? "text-gray-300" : "text-black"
+              }`}
+            >
+              HIVE
+            </div>
+            <div
+              className={`${
+                currentTheme === "dark" ? "text-gray-300" : "text-black"
+              }`}
+            >
+              Price
+            </div>
           </div>
           {orderBookData.bids.length > 0 ? (
             orderBookData.bids.map((order, index) => (
               <div key={index} className="flex justify-between">
-                <div>{order.order_price.quote.replace(" HIVE", "")}</div>
-                <div>{parseFloat(order.real_price).toFixed(3)}</div>
+                <div
+                  className={`${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  {order.order_price.quote.replace(" HIVE", "")}
+                </div>
+                <div
+                  className={`${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  {parseFloat(order.real_price).toFixed(3)}
+                </div>
               </div>
             ))
           ) : (
@@ -58,14 +99,38 @@ const OrderBook = () => {
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
           <div className="flex justify-between font-bold">
-            <div>HIVE</div>
-            <div>Price</div>
+            <div
+              className={`${
+                currentTheme === "dark" ? "text-gray-300" : "text-black"
+              }`}
+            >
+              HIVE
+            </div>
+            <div
+              className={`${
+                currentTheme === "dark" ? "text-gray-300" : "text-black"
+              }`}
+            >
+              Price
+            </div>
           </div>
           {orderBookData.asks.length > 0 ? (
             orderBookData.asks.map((order, index) => (
               <div key={index} className="flex justify-between">
-                <div>{order.order_price.base.replace(" HIVE", "")}</div>
-                <div>{parseFloat(order.real_price).toFixed(3)}</div>
+                <div
+                  className={`${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  {order.order_price.base.replace(" HIVE", "")}
+                </div>
+                <div
+                  className={`${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
+                  {parseFloat(order.real_price).toFixed(3)}
+                </div>
               </div>
             ))
           ) : (

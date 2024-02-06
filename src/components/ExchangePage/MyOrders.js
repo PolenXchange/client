@@ -4,6 +4,7 @@ import { fetchMyOpenOrders, fetchAccount } from "../../redux/store";
 const MyOrders = () => {
   const myOpenOrders = useSelector((state) => state.openOrders);
   const username = useSelector((state) => state.auth.username);
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const dispatch = useDispatch();
 
@@ -112,35 +113,107 @@ const MyOrders = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
-      <h2 className="text-lg font-bold mb-4">My Orders</h2>
+    <div
+      className={`${
+        currentTheme === "dark" ? "bg-gray-800" : "bg-white"
+      } p-4 rounded-lg shadow-md `}
+    >
+      <h2
+        className={`text-lg font-bold mb-4 ${
+          currentTheme === "dark" ? "text-gray-300" : "text-black"
+        }`}
+      >
+        My Orders
+      </h2>
       {myOpenOrders.length > 0 ? (
         <table className="w-full">
           <thead>
             <tr>
-              <th className="text-center">Time</th>
-              <th className="text-center">Type</th>
-              <th className="text-center">Price</th>
-              <th className="text-center">HIVE Amount</th>
-              <th className="text-center">Fill %</th>
-              <th className="text-center"></th>
+              <th
+                className={`text-center ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              >
+                Time
+              </th>
+              <th
+                className={`text-center ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              >
+                Type
+              </th>
+              <th
+                className={`text-center ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              >
+                Price
+              </th>
+              <th
+                className={`text-center ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              >
+                HIVE Amount
+              </th>
+              <th
+                className={`text-center ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              >
+                Fill %
+              </th>
+              <th
+                className={`text-center ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              ></th>
             </tr>
           </thead>
           <tbody>
             {myOpenOrders.map((order) => (
               <tr key={order.id}>
-                <td className="text-center">
+                <td
+                  className={`text-center ${
+                    currentTheme === "dark" ? "text-gray-300" : "text-black"
+                  }`}
+                >
                   {timeSince(new Date(order.created), new Date())}
                 </td>
-                <td className="text-center">{determineOrderType(order)}</td>
-                <td className="text-center">
+                <td
+                  className={`text-center ${
+                    currentTheme === "dark" ? "text-gray-300" : "text-black"
+                  }`}
+                >
+                  {determineOrderType(order)}
+                </td>
+                <td
+                  className={`text-center ${
+                    currentTheme === "dark" ? "text-gray-300" : "text-black"
+                  }`}
+                >
                   {parseFloat(order.real_price).toFixed(3)}
                 </td>
-                <td className="text-center">{determineHiveAmount(order)}</td>
-                <td className="text-center">
+                <td
+                  className={`text-center ${
+                    currentTheme === "dark" ? "text-gray-300" : "text-black"
+                  }`}
+                >
+                  {determineHiveAmount(order)}
+                </td>
+                <td
+                  className={`text-center ${
+                    currentTheme === "dark" ? "text-gray-300" : "text-black"
+                  }`}
+                >
                   {calculateFilledPercentage(order)}
                 </td>
-                <td className="text-center">
+                <td
+                  className={`text-center ${
+                    currentTheme === "dark" ? "text-gray-400" : "text-black"
+                  }`}
+                >
                   <button
                     className="bg-red-500 text-white py-1 px-2 rounded"
                     onClick={() => handleCancelOrder(order.orderid)}
@@ -153,7 +226,13 @@ const MyOrders = () => {
           </tbody>
         </table>
       ) : (
-        <p className="text-center">No open orders</p>
+        <p
+          className={`text-center ${
+            currentTheme === "dark" ? "text-gray-400" : "text-black"
+          }`}
+        >
+          No open orders
+        </p>
       )}
     </div>
   );

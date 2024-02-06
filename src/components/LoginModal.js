@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/auth/authThunk";
+import { useSelector } from "react-redux";
 
 const LoginModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const modalRef = useRef(null);
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -38,17 +40,35 @@ const LoginModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
-      <div ref={modalRef} className="bg-white p-8 rounded-md w-72">
-        <h2 className="text-2xl font-bold mb-4">Login to Your Hive Account</h2>
+      <div
+        ref={modalRef}
+        className={`${
+          currentTheme === "dark" ? "bg-gray-800" : "bg-white"
+        } p-8 rounded-md w-72`}
+      >
+        <h2
+          className={`text-2xl font-bold mb-4 ${
+            currentTheme === "dark" ? "text-gray-200" : "text-black"
+          }`}
+        >
+          Login to Your Hive Account
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="username" className="block font-medium">
+            <label
+              htmlFor="username"
+              className={`block font-medium ${
+                currentTheme === "dark" ? "text-gray-300" : "text-black"
+              }`}
+            >
               Username
             </label>
             <input
               type="text"
               id="username"
-              className="border rounded-md p-2 w-full"
+              className={`border rounded-md p-2 w-full ${
+                currentTheme === "dark" ? "bg-gray-500" : "text-black"
+              }`}
               value={username}
               onChange={handleUsernameChange}
             />
@@ -64,7 +84,13 @@ const LoginModal = ({ isOpen, onClose }) => {
           </div>
         </form>
 
-        <p className="text-sm mb-2">Don't have a Hive account yet?</p>
+        <p
+          className={`text-sm mb-2 ${
+            currentTheme === "dark" ? "text-gray-300" : "text-black"
+          }`}
+        >
+          Don't have a Hive account yet?
+        </p>
         <div className="flex justify-between">
           <a
             href="https://ecency.com/signup?referral=igormuba"
@@ -84,7 +110,11 @@ const LoginModal = ({ isOpen, onClose }) => {
           </a>
         </div>
 
-        <p className="text-sm mt-4">
+        <p
+          className={`text-sm mt-4 ${
+            currentTheme === "dark" ? "text-gray-300" : "text-black"
+          }`}
+        >
           Already have a Hive account but no Hive Keychain?
         </p>
         <div className="flex justify-center">

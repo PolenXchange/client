@@ -7,17 +7,16 @@ const ExchangeChart = () => {
   const tradeHistory = useSelector((state) => state.tradeHistory);
   const [parsedData, setParsedData] = useState([]);
   const [chartData, setChartData] = useState([]);
-  const [reactApexChart, setReactApexChart] = useState();
+  const [chartOptions, setChartOptions] = useState({});
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
+
   useEffect(() => {
-    console.log("tradeHistory");
-    console.log(tradeHistory);
     if (tradeHistory.length > 0) {
       setParsedData(parseFiveMinuteChart([...tradeHistory].reverse()));
     }
   }, [tradeHistory]);
+
   useEffect(() => {
-    console.log("parsedData");
-    console.log(parsedData);
     if (parsedData.length > 0) {
       setChartData([
         {
@@ -26,21 +25,43 @@ const ExchangeChart = () => {
       ]);
     }
   }, [parsedData]);
+
   useEffect(() => {
-    console.log("chartData");
-    console.log(chartData);
-    if (chartData.length > 0) {
-      setReactApexChart(
-        <ReactApexChart
-          options={options}
-          series={chartData}
-          type="candlestick"
-          height={chartHeight}
-        />
-      );
-    }
-  }, [chartData]);
-  const [chartHeight, setChartHeight] = useState(400); // Initial chart height
+    const options = {
+      chart: {
+        type: "candlestick",
+        height: chartHeight, // Use the dynamic chart height
+      },
+      title: {
+        text: "5 Min Candlestick Chart",
+        align: "left",
+        style: {
+          color: currentTheme === "dark" ? "#ffffff" : "#000000",
+        },
+      },
+      xaxis: {
+        type: "datetime",
+        labels: {
+          style: {
+            colors: currentTheme === "dark" ? "#ffffff" : "#000000",
+          },
+        },
+      },
+      yaxis: {
+        tooltip: {
+          enabled: true,
+        },
+        labels: {
+          style: {
+            colors: currentTheme === "dark" ? "#ffffff" : "#000000",
+          },
+        },
+      },
+    };
+    setChartOptions(options);
+  }, [currentTheme]);
+
+  const [chartHeight, setChartHeight] = useState(400);
 
   const handleResize = () => {
     const isMobile = window.innerWidth <= 768;
@@ -48,35 +69,24 @@ const ExchangeChart = () => {
   };
 
   useEffect(() => {
-    handleResize(); // Initial resize on component mount
-    window.addEventListener("resize", handleResize); // Add resize event listener
+    handleResize();
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize); // Remove event listener on component unmount
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   if (!tradeHistory || tradeHistory.length === 0) {
-    return <p>Loading chart data...</p>;
+    return (
+      <p
+        className={`${
+          currentTheme === "dark" ? "text-gray-300" : "text-black"
+        }`}
+      >
+        Loading chart data...
+      </p>
+    );
   }
-
-  const options = {
-    chart: {
-      type: "candlestick",
-      height: chartHeight, // Use the dynamic chart height
-    },
-    title: {
-      text: "5 Min Candlestick Chart",
-      align: "left",
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    yaxis: {
-      tooltip: {
-        enabled: true,
-      },
-    },
-  };
 
   return (
     <div id="chart-container" className="flex justify-center items-center p-4">
@@ -84,9 +94,20 @@ const ExchangeChart = () => {
         {chartData.length > 0 &&
         chartData[0] &&
         chartData[0].data.length > 0 ? (
-          reactApexChart
+          <ReactApexChart
+            options={chartOptions}
+            series={chartData}
+            type="candlestick"
+            height={chartHeight}
+          />
         ) : (
-          <p>No chart data available.</p>
+          <p
+            className={`${
+              currentTheme === "dark" ? "text-gray-300" : "text-black"
+            }`}
+          >
+            No chart data available.
+          </p>
         )}
       </div>
     </div>

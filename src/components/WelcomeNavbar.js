@@ -1,13 +1,14 @@
 import HiveLogo from "../assets/polenx.png";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { resetAccount, openLoginModal, closeLoginModal } from "../redux/store";
 import { logout } from "../redux/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { setTheme } from "../redux/theme/themeSlice";
 export default function WelcomeNavBar() {
   const dispatch = useDispatch();
 
@@ -15,6 +16,8 @@ export default function WelcomeNavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isModalOpen = useSelector((state) => state.modalLogin.isLoginModalOpen);
   const username = useSelector((state) => state.auth.username);
+  // Get the current theme from the Redux store
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
   const navigate = useNavigate();
   const toggleModal = () => {
     if (username || isModalOpen) {
@@ -23,6 +26,20 @@ export default function WelcomeNavBar() {
       dispatch(openLoginModal()); // Open the modal
     }
   };
+  const toggleTheme = () => {
+    // Toggle the theme by setting it to the opposite of the current theme
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+
+    // Dispatch the setTheme action with the new theme value
+    dispatch(setTheme(newTheme));
+  };
+  useEffect(() => {
+    // Get the current theme from the Redux store
+
+    // Set the body background color based on the current theme
+    document.body.style.backgroundColor =
+      currentTheme === "light" ? "#ffffff" : "#1f2937";
+  }, [currentTheme]); // Run this effect only once, when the component mounts
   const handleLinkClick = (path) => {
     setIsMobileMenuOpen(false);
     console.log(`navigating to ${path}`);
@@ -76,6 +93,15 @@ export default function WelcomeNavBar() {
             </div>
             {/* User-related elements (Login, Username) on smaller screens */}
             <div className="flex items-center space-x-4 ml-auto md:ml-0">
+              <button
+                onClick={toggleTheme}
+                className="text-gray-300 hover:text-white focus:outline-none"
+              >
+                <FontAwesomeIcon
+                  icon={currentTheme === "light" ? faMoon : faSun}
+                  className="h-4 w-4"
+                />
+              </button>
               {username ? (
                 // Logout button
                 <>
@@ -91,12 +117,14 @@ export default function WelcomeNavBar() {
                 </>
               ) : (
                 // Login button
-                <button
-                  onClick={handleLogin}
-                  className="text-sm font-medium text-gray-300 hover:text-white"
-                >
-                  {username ? username : "Login"}
-                </button>
+                <>
+                  <button
+                    onClick={handleLogin}
+                    className="text-sm font-medium text-gray-300 hover:text-white"
+                  >
+                    {username ? username : "Login"}
+                  </button>
+                </>
               )}
             </div>
             {/* Mobile menu button */}

@@ -16,6 +16,7 @@ const SwapPage = () => {
   const [networkFee, setNetworkFee] = useState(0.0);
   const [totalCost, setTotalCost] = useState(0.0);
   const [maxOffset, setMaxOffset] = useState(0.0);
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const [isHiveToHbd, setIsHiveToHbd] = useState(true);
   const [fromGreaterThanBalance, setFromGreaterThanBalance] = useState(true);
@@ -205,20 +206,40 @@ const SwapPage = () => {
   // Add more event handlers and logic as needed
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Token Swap</h2>
+    <div
+      className={`flex flex-col items-center justify-center min-h-screen ${
+        currentTheme === "dark" ? "bg-gray-700" : "bg-gray-100"
+      }`}
+    >
+      <div
+        className={`w-full max-w-md p-6 rounded-lg shadow-md ${
+          currentTheme === "dark" ? "bg-gray-800" : "bg-white"
+        }`}
+      >
+        <h2
+          className={`text-2xl font-semibold mb-4 ${
+            currentTheme === "dark" ? "text-gray-300" : "text-black"
+          }`}
+        >
+          Token Swap
+        </h2>
 
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center">
-              <span className="text-sm">
+              <span
+                className={`text-sm ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              >
                 {isHiveToHbd ? "HIVE" : "HBD"} (FROM)
               </span>
             </div>
             <input
               type="number"
-              className="w-64 border border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500"
+              className={`w-64 border border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500 ${
+                currentTheme === "dark" ? "bg-gray-500" : "text-black"
+              }`}
               value={fromAmount}
               onChange={handleFromAmountChange}
             />
@@ -229,11 +250,19 @@ const SwapPage = () => {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center">
-              <span className="text-sm">
+              <span
+                className={`text-sm ${
+                  currentTheme === "dark" ? "text-gray-400" : "text-black"
+                }`}
+              >
                 {isHiveToHbd ? "HBD" : "HIVE"} (TO)
               </span>
             </div>
-            <div className="w-64 border border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500">
+            <div
+              className={`w-64 border border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500 ${
+                currentTheme === "dark" ? "bg-gray-500" : "text-black"
+              }`}
+            >
               {toAmount}
             </div>
           </div>
@@ -266,7 +295,7 @@ const SwapPage = () => {
           </button>
         </div>
       </div>
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-md p-6">
         <MyOrders />
       </div>
     </div>

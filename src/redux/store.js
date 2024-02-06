@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import authReducer, { setLoggedIn, logout } from "./auth/authSlice";
 import { login } from "./auth/authThunk";
+import themeReducer from "./theme/themeSlice";
 import axios from "axios";
 
 // Async thunk to fetch trade history
@@ -38,7 +39,9 @@ export const fetchMyOpenOrders = createAsyncThunk(
   "tradeHistory/fetchMyOpenOrders",
   async (username) => {
     try {
-      const result = await axios.get(`/api/openorders?account=${username}&now=${Date.now()}`);
+      const result = await axios.get(
+        `/api/openorders?account=${username}&now=${Date.now()}`
+      );
       return result.data;
     } catch (error) {
       throw new Error("Failed to fetch trade history.");
@@ -50,7 +53,9 @@ export const fetchAccount = createAsyncThunk(
   "tradeHistory/getaccount",
   async (username) => {
     try {
-      const result = await axios.get(`/api/getaccount?account=${username}&now=${Date.now()}`);
+      const result = await axios.get(
+        `/api/getaccount?account=${username}&now=${Date.now()}`
+      );
       return result.data[0];
     } catch (error) {
       throw new Error("Failed to fetch trade history.");
@@ -160,6 +165,7 @@ const store = configureStore({
     openOrders: openOrdersSlice.reducer,
     account: accountSlice.reducer,
     modalLogin: modalLoginSlice.reducer,
+    theme: themeReducer,
     // Add more slices here if needed
   },
 });
